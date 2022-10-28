@@ -33,6 +33,7 @@ router.post('/register', async (req, res) => {
       password: hashedPassword,
       favs: []
     })
+    // 
   
     await newUser.save()
 
