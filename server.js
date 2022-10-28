@@ -3,7 +3,7 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const rowdy = require('rowdy-logger')
-
+const authLockedRoute = require('./controllers/api-v1/authLockedRoute')
 // config express app
 const app = express()
 const PORT = process.env.PORT || 3001 
@@ -15,8 +15,19 @@ app.use(cors())
 app.use(express.urlencoded({ extended: false })) // optional 
 app.use(express.json())
 
+const myMiddleWare = ((req, res, next) => {
+  console.log('hello from the middleware')
+  next() // tells express, go to the next thing
+})
+
+//? if out side of a specific route, middleware is applied to every route
+// app.use(myMiddleWare) 
+
+
+
 // GET / -- test index route
-app.get('/', (req, res) => {
+//? Route specific middlware only will be applied on this route
+app.get('/', authLockedRoute, (req, res) => {
   res.json({ msg: 'hello backend 🤖' })
 })
 

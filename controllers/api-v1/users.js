@@ -30,7 +30,8 @@ router.post('/register', async (req, res) => {
     const newUser = new db.User({
       name: req.body.name,
       email: req.body.email,
-      password: hashedPassword
+      password: hashedPassword,
+      favs: []
     })
   
     await newUser.save()
@@ -39,7 +40,8 @@ router.post('/register', async (req, res) => {
     const payload = {
       name: newUser.name,
       email: newUser.email, 
-      id: newUser.id
+      id: newUser.id,
+      favs: newUser.favs
     }
 
     // sign jwt and send back
@@ -75,7 +77,8 @@ router.post('/login', async (req, res) => {
     const payload = {
       name: foundUser.name,
       email: foundUser.email, 
-      id: foundUser.id
+      id: foundUser.id,
+      favs: foundUser.favs
     }
 
     // sign jwt and send back
